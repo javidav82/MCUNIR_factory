@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OWASP ZAP Scan Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .alert { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; }
+        .high { background-color: #ffcccc; }
+        .medium { background-color: #fff3cd; }
+        .low { background-color: #d4edda; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>OWASP ZAP Scan Report</h1>
+    <p>Generated: 2025-04-21T00:14:10+02:00</p>
+    <p>Target: http://localhost:8000</p>
+
+    <h2>Alerts</h2>    <div class="alert low">
+        <h3>X-Content-Type-Options Header Missing - Low (Medium)</h3>
+        <p><strong>Description:</strong> The Anti-MIME-Sniffing header X-Content-Type-Options was not set to "nosniff".</p>
+        <p><strong>Solution:</strong> Ensure that the application/web server sets the Content-Type header appropriately.</p>
+        <table>
+            <tr>
+                <th>URI</th>
+                <th>Method</th>
+                <th>Parameter</th>
+            </tr>            <tr>
+                <td>http://localhost:8000/</td>
+                <td>GET</td>
+                <td>X-Content-Type-Options</td>
+            </tr>        </table>
+    </div>    <div class="alert low">
+        <h3>Content Security Policy (CSP) Header Not Set - Low (Medium)</h3>
+        <p><strong>Description:</strong> Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks.</p>
+        <p><strong>Solution:</strong> Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>
+        <table>
+            <tr>
+                <th>URI</th>
+                <th>Method</th>
+                <th>Parameter</th>
+            </tr>            <tr>
+                <td>http://localhost:8000/api/print-jobs</td>
+                <td>POST</td>
+                <td>Content-Security-Policy</td>
+            </tr>        </table>
+    </div>    <div class="alert medium">
+        <h3>Cross-Domain JavaScript Source File Inclusion - Medium (Medium)</h3>
+        <p><strong>Description:</strong> The page includes one or more script files from a third-party domain.</p>
+        <p><strong>Solution:</strong> Ensure JavaScript source files are loaded from only trusted sources.</p>
+        <table>
+            <tr>
+                <th>URI</th>
+                <th>Method</th>
+                <th>Parameter</th>
+            </tr>            <tr>
+                <td>http://localhost:8000/resources/js/app.js</td>
+                <td>GET</td>
+                <td>src</td>
+            </tr>        </table>
+    </div></body>
+</html>

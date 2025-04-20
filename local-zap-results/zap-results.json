@@ -1,0 +1,83 @@
+{
+    "@version": "2.14.0",
+    "@generated": "2025-04-21T00:14:10+02:00",
+    "site": [
+        {
+            "@name": "http:\/\/localhost:8000",
+            "@host": "localhost",
+            "@port": "8000",
+            "@ssl": "false",
+            "alerts": [
+                {
+                    "pluginid": "10021",
+                    "alertRef": "10021",
+                    "name": "X-Content-Type-Options Header Missing",
+                    "riskcode": "1",
+                    "confidence": "2",
+                    "riskdesc": "Low (Medium)",
+                    "desc": "The Anti-MIME-Sniffing header X-Content-Type-Options was not set to \"nosniff\".",
+                    "instances": [
+                        {
+                            "uri": "http:\/\/localhost:8000\/",
+                            "method": "GET",
+                            "param": "X-Content-Type-Options",
+                            "evidence": ""
+                        }
+                    ],
+                    "count": "1",
+                    "solution": "Ensure that the application\/web server sets the Content-Type header appropriately.",
+                    "otherinfo": "This issue still applies to error type pages (401, 403, 500, etc) as those pages are often still affected by injection issues.",
+                    "reference": "http:\/\/msdn.microsoft.com\/en-us\/library\/ie\/gg622941%28v=vs.85%29.aspx",
+                    "cweid": "16",
+                    "wascid": "15"
+                },
+                {
+                    "pluginid": "10038",
+                    "alertRef": "10038",
+                    "name": "Content Security Policy (CSP) Header Not Set",
+                    "riskcode": "1",
+                    "confidence": "2",
+                    "riskdesc": "Low (Medium)",
+                    "desc": "Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks.",
+                    "instances": [
+                        {
+                            "uri": "http:\/\/localhost:8000\/api\/print-jobs",
+                            "method": "POST",
+                            "param": "Content-Security-Policy",
+                            "evidence": ""
+                        }
+                    ],
+                    "count": "1",
+                    "solution": "Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",
+                    "otherinfo": "To implement CSP, you need to add the Content-Security-Policy HTTP header to your web page.",
+                    "reference": "https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/HTTP\/Headers\/Content-Security-Policy",
+                    "cweid": "16",
+                    "wascid": "15"
+                },
+                {
+                    "pluginid": "40012",
+                    "alertRef": "40012",
+                    "name": "Cross-Domain JavaScript Source File Inclusion",
+                    "riskcode": "2",
+                    "confidence": "2",
+                    "riskdesc": "Medium (Medium)",
+                    "desc": "The page includes one or more script files from a third-party domain.",
+                    "instances": [
+                        {
+                            "uri": "http:\/\/localhost:8000\/resources\/js\/app.js",
+                            "method": "GET",
+                            "param": "src",
+                            "evidence": "https:\/\/cdn.jsdelivr.net\/npm\/bootstrap@5.1.3\/dist\/js\/bootstrap.bundle.min.js"
+                        }
+                    ],
+                    "count": "1",
+                    "solution": "Ensure JavaScript source files are loaded from only trusted sources.",
+                    "otherinfo": "The page includes one or more script files from a third-party domain.",
+                    "reference": "https:\/\/owasp.org\/www-community\/attacks\/xss\/",
+                    "cweid": "829",
+                    "wascid": "15"
+                }
+            ]
+        }
+    ]
+}
