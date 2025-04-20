@@ -13,28 +13,27 @@ class PrintJob extends Model
     use HasFactory;
 
     protected $fillable = [
-        'batch_id',
-        'file_name',
-        'file_path',
-        'file_type',
-        'file_size',
-        'page_count',
+        'document_name',
+        'printer_id',
+        'user_id',
         'status',
-        'error_message',
-        'attempts',
-        'started_at',
-        'completed_at'
+        'copies',
+        'color',
+        'double_sided',
+        'file_path'
     ];
 
     protected $casts = [
-        'started_at' => 'datetime',
-        'completed_at' => 'datetime',
-        'file_size' => 'integer',
-        'page_count' => 'integer',
-        'attempts' => 'integer'
+        'color' => 'boolean',
+        'double_sided' => 'boolean'
     ];
 
     // Relationships
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function batch(): BelongsTo
     {
         return $this->belongsTo(PrintBatch::class, 'batch_id');

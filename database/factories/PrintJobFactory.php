@@ -13,17 +13,14 @@ class PrintJobFactory extends Factory
     public function definition()
     {
         return [
+            'document_name' => $this->faker->word . '.pdf',
+            'printer_id' => $this->faker->numberBetween(1, 10),
             'user_id' => User::factory(),
-            'title' => $this->faker->sentence,
-            'job_status' => $this->faker->randomElement(['pending', 'processing', 'completed', 'failed']),
-            'document_status' => $this->faker->randomElement(['pending', 'validated', 'rejected']),
-            'document_type' => $this->faker->randomElement(['PDF', 'DOC', 'DOCX']),
-            'pages' => $this->faker->numberBetween(1, 100),
-            'format' => $this->faker->randomElement(['A4', 'Letter', 'Legal']),
-            'last_validation' => $this->faker->dateTimeBetween('-1 month', 'now'),
-            'feedback' => $this->faker->optional()->paragraph,
-            'created_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
-            'updated_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
+            'status' => $this->faker->randomElement(['pending', 'processing', 'completed', 'failed']),
+            'copies' => $this->faker->numberBetween(1, 10),
+            'color' => $this->faker->boolean,
+            'double_sided' => $this->faker->boolean,
+            'file_path' => $this->faker->filePath()
         ];
     }
 
@@ -31,7 +28,7 @@ class PrintJobFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'job_status' => 'pending',
+                'status' => 'pending',
             ];
         });
     }
@@ -40,7 +37,7 @@ class PrintJobFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'job_status' => 'processing',
+                'status' => 'processing',
             ];
         });
     }
@@ -49,7 +46,7 @@ class PrintJobFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'job_status' => 'completed',
+                'status' => 'completed',
             ];
         });
     }
@@ -58,7 +55,7 @@ class PrintJobFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'job_status' => 'failed',
+                'status' => 'failed',
             ];
         });
     }

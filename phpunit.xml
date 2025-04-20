@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
          convertErrorsToExceptions="true"
@@ -16,12 +16,14 @@
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+    </source>
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">./app</directory>
-            <directory suffix=".php">./config</directory>
-            <directory suffix=".php">./database</directory>
-            <directory suffix=".php">./routes</directory>
         </include>
         <exclude>
             <directory>./vendor</directory>
@@ -29,10 +31,15 @@
             <directory>./bootstrap</directory>
             <directory>./public</directory>
             <directory>./resources</directory>
+            <directory>./tests</directory>
+            <directory>./app/Console</directory>
+            <directory>./app/Exceptions</directory>
+            <directory>./app/Http/Middleware</directory>
+            <directory>./app/Providers</directory>
         </exclude>
         <report>
-            <clover outputFile="storage/coverage/coverage.xml"/>
-            <html outputDirectory="storage/coverage/html"/>
+            <html outputDirectory="build/coverage"/>
+            <xml outputDirectory="build/coverage"/>
             <text outputFile="php://stdout" showUncoveredFiles="true"/>
         </report>
     </coverage>
@@ -40,8 +47,11 @@
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
-        <env name="DB_CONNECTION" value="sqlite"/>
-        <env name="DB_DATABASE" value=":memory:"/>
+        <env name="DB_CONNECTION" value="mysql"/>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_DATABASE" value="mcunir_factory"/>
+        <env name="DB_USERNAME" value="root"/>
+        <env name="DB_PASSWORD" value=""/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
