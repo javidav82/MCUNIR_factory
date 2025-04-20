@@ -1,0 +1,45 @@
+name: Process Local ZAP Scan Results
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Permite ejecución manual
+
+jobs:
+  process_zap_results:
+    runs-on: ubuntu-latest
+    name: Process ZAP Scan Results
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download ZAP Results
+        uses: actions/download-artifact@v3
+        with:
+          name: local-zap-results
+          path: local-zap-results
+
+      - name: Convert ZAP Results to SARIF
+        run: |
+          # Instalar dependencias necesarias
+          pip install zapcli
+          
+          # Convertir resultados a SARIF
+          zap-cli convert -f sarif -o zap-results.sarif local-zap-results/zap-results.json
+
+      - name: Upload ZAP Scan Results to Security Dashboard
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: zap-results.sarif
+          category: zap-scan
+
+      - name: Upload ZAP Scan Results as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: processed-zap-results
+          path: |
+            zap-results.sarif
+            local-zap-results/zap-results.html
+          retention-days: 5 
